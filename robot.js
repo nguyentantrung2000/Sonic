@@ -124,7 +124,7 @@ function goalOrientedRobot({place, parcels}, route) {
   let active = null
 
   const places = {
-    "Alice's House": {x: 279, y: 100},
+    "Alice's House": {x: 300, y: 100},
     "Bob's House": {x: 295, y: 203},
     "Cabin": {x: 372, y: 67},
     "Daria's House": {x: 183, y: 285},
@@ -135,10 +135,10 @@ function goalOrientedRobot({place, parcels}, route) {
     "Post Office": {x: 205, y: 57},
     "Shop": {x: 137, y: 212},
     "Town Hall": {x: 202, y: 213}
-  }
+  } /// biến tọa độ vị trí ox ,oy
   const placeKeys = Object.keys(places)
 
-  const speed = 2
+  const speed = 2; // biến tăng tốc độ sonice
 
   class Animation {
     constructor(worldState, robot, robotState) {
@@ -151,17 +151,18 @@ function goalOrientedRobot({place, parcels}, route) {
       this.node = outer.appendChild(doc.createElement("div"))
       this.node.style.cssText = "position: relative; line-height: 0.1; margin-left: 10px"
       this.map = this.node.appendChild(doc.createElement("img"))
-      this.map.src = "./asset/village2x.png"
+      this.map.src = "./asset/map.jpg"
       this.map.style.cssText = "vertical-align: -8px"
       this.robotElt = this.node.appendChild(doc.createElement("div"))
       this.robotElt.style.cssText = `position: absolute; transition: left ${0.8 / speed}s, top ${0.8 / speed}s;`
       let robotPic = this.robotElt.appendChild(doc.createElement("img"))
-      robotPic.src = "./asset/mua.gif"
+      robotPic.src = "./asset/robot-moveing2x.gif"
+      robotPic.style.height="60px"
       this.parcels = []
 
       this.text = this.node.appendChild(doc.createElement("span"))
       this.button = this.node.appendChild(doc.createElement("button"))
-      this.button.style.cssText = "color: white; background: #28b; border: none; border-radius: 2px; padding: 2px 5px; line-height: 1.1; font-family: sans-serif; font-size: 80%"
+      this.button.style.cssText = "color: white; background: #28b; border:; border-radius: 2px; padding: 2px 5px; line-height: 1.1; font-family: sans-serif; font-size: 80%"
       this.button.textContent = "Stop"
 
       this.button.addEventListener("click", () => this.clicked())
@@ -190,7 +191,7 @@ function goalOrientedRobot({place, parcels}, route) {
         heights[place] += 14
         let node = document.createElement("div")
         let offset = placeKeys.indexOf(address) * 16
-        node.style.cssText = "position: absolute; height: 16px; width: 16px; background-image: url(img/parcel2x.png); background-position: 0 -" + offset + "px";
+        node.style.cssText = "position: absolute; height: 10px; width: 10px; background-image: url(./asset/map1.gif); background-position: 0 -" + offset + "px";
         if (place == this.worldState.place) {
           node.style.left = "25px"
           node.style.bottom = (20 + height) + "px"
@@ -214,7 +215,7 @@ function goalOrientedRobot({place, parcels}, route) {
       if (this.worldState.parcels.length == 0) {
         this.button.remove()
         this.text.textContent = ` Finished after ${this.turn} turns`
-        this.robotElt.firstChild.src = "./asset/robot_idle2x.png"
+        this.robotElt.firstChild.src = "./asset/rsz_sonicstand.png"
       } else {
         this.schedule()
       }
@@ -228,12 +229,12 @@ function goalOrientedRobot({place, parcels}, route) {
       if (this.timeout == null) {
         this.schedule()
         this.button.textContent = "Stop"
-        this.robotElt.firstChild.src = "./asset/robot_moving2x.gif"
+        this.robotElt.firstChild.src = "./asset/robot-moveing2x.gif"
       } else {
         clearTimeout(this.timeout)
         this.timeout = null
         this.button.textContent = "Start"
-        this.robotElt.firstChild.src = "./asset/robot_idle2x.png"
+        this.robotElt.firstChild.src = "./asset/rsz_sonicstand.png"
       }
     }
   }
